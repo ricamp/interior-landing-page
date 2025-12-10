@@ -1,0 +1,33 @@
+/* ========================================
+   CLASSES PARA REMOVER INLINE STYLES (CSP)
+   ======================================== */
+
+/* Honeypot field - hidden from users and bots */
+.visually-hidden {
+    position: absolute;
+    left: -9999px;
+    width: 1px;
+    height: 1px;
+}
+
+/* reCAPTCHA compliance text */
+.recaptcha-disclosure {
+    font-size: 0.7rem;
+    color: rgba(255, 255, 255, 0.5);
+    text-align: center;
+    margin-top: 20px;
+    line-height: 1.4;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.recaptcha-disclosure a {
+    color: rgba(255, 255, 255, 0.7);
+    text-decoration: underline;
+}
+
+/* Gold colored labels (bar section) */
+.label-gold {
+    color: var(--gold);
+}

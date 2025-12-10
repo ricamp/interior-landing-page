@@ -1,0 +1,9 @@
+# Supabase credentials
+supabase-config.js
+
+# Environment files
+.env
+.env.local
+
+# API keys
+*-config.js
