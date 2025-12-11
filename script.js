@@ -2,28 +2,23 @@
 // Note: All GSAP animations are in animations.js
 // This file handles: form validation, Supabase integration, security features
 
-
-/* --- SECURITY: DISABLE CONSOLE IN PRODUCTION --- */
-const isDevelopment = window.location.hostname === 'localhost' ||
-    window.location.hostname === '127.0.0.1' ||
-    window.location.hostname.includes('192.168');
-
-if (!isDevelopment) {
-    console.log = () => { };
-    console.error = () => { };
-    console.warn = () => { };
-}
-
 /* --- SUPABASE INTEGRATION --- */
 // Load Supabase config (make sure supabase-config.js is loaded first)
-let supabase;
+let supabase = null;
 
 // Initialize Supabase client when config is available
-if (typeof SUPABASE_CONFIG !== 'undefined') {
-    supabase = window.supabase.createClient(
-        SUPABASE_CONFIG.url,
-        SUPABASE_CONFIG.anonKey
-    );
+try {
+    if (typeof SUPABASE_CONFIG !== 'undefined' && typeof window.supabase !== 'undefined') {
+        supabase = window.supabase.createClient(
+            SUPABASE_CONFIG.url,
+            SUPABASE_CONFIG.anonKey
+        );
+        console.log('✅ Supabase initialized');
+    } else {
+        console.error('❌ Supabase config not found');
+    }
+} catch (e) {
+    console.error('❌ Supabase init error:', e);
 }
 
 /* --- INPUT VALIDATION FUNCTIONS --- */
