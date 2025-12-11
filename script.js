@@ -290,29 +290,32 @@ if (waitlistForm) {
 }
 
 /* --- BACK TO TOP BUTTON --- */
-const backToTopBtn = document.querySelector('.back-to-top');
+document.addEventListener('DOMContentLoaded', () => {
+    const backToTopBtn = document.querySelector('.back-to-top');
+    console.log('🔼 Back-to-top button:', backToTopBtn ? 'found' : 'not found');
 
-if (backToTopBtn) {
-    // Show button when user scrolls past 50% of the page
-    window.addEventListener('scroll', () => {
-        const scrollPercent = (window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100;
+    if (backToTopBtn) {
+        // Show button when user scrolls past 50% of the page
+        window.addEventListener('scroll', () => {
+            const scrollPercent = (window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100;
 
-        if (scrollPercent > 50) {
-            backToTopBtn.classList.add('visible');
-        } else {
-            backToTopBtn.classList.remove('visible');
-        }
-    });
+            if (scrollPercent > 50) {
+                backToTopBtn.classList.add('visible');
+            } else {
+                backToTopBtn.classList.remove('visible');
+            }
+        });
 
-    // Smooth scroll to top on click using Lenis
-    backToTopBtn.addEventListener('click', () => {
-        if (typeof lenis !== 'undefined') {
-            lenis.scrollTo(0, {
-                duration: 2,
-                easing: (t) => 1 === t ? 1 : 1 - Math.pow(2, -10 * t)
-            });
-        } else {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-    });
-}
+        // Smooth scroll to top on click using Lenis
+        backToTopBtn.addEventListener('click', () => {
+            if (typeof lenis !== 'undefined') {
+                lenis.scrollTo(0, {
+                    duration: 2,
+                    easing: (t) => 1 === t ? 1 : 1 - Math.pow(2, -10 * t)
+                });
+            } else {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        });
+    }
+});
