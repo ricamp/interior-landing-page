@@ -1,16 +1,5 @@
-
-gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
-
-const lenis = new Lenis({
-    duration: 1.5, smooth: true
-});
-
-function raf(time) {
-    lenis.raf(time);
-    requestAnimationFrame(raf);
-}
-
-requestAnimationFrame(raf);
+// script.js - Main application logic
+// Note: lenis, GSAP plugins are initialized in animations.js
 
 // 1. ANIMAÇÃO DE ENTRADA DO LOGO (Robust Fix)
 // Note: SVG injection handling is required if we switch to an external file.
