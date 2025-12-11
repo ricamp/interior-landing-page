@@ -297,7 +297,7 @@ Módulo `security-logger.js` criado para registrar eventos:
 ║   ✅ Proteção Anti-Bot         (20/20)        ║
 ║   ✅ Validação de Input        (20/20)        ║
 ║   ✅ Proteção XSS              (20/20)        ║
-║   ✅ SRI + HSTS + Logging     (20/20)        ║
+║   ✅ SRI + HSTS + Logging     (20/20)         ║
 ║                                               ║
 ╚═══════════════════════════════════════════════╝
 ```

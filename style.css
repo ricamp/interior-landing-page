@@ -1404,71 +1404,10 @@
             stroke: var(--white);
         }
 
-        /* --- INTL-TEL-INPUT OVERRIDES (Dark Theme) --- */
-        .iti {
-            display: block;
-            width: 100%;
-        }
+        /* --- INTL-TEL-INPUT OVERRIDES REMOVED --- */
 
-        .iti__flag-container {
-            border-radius: 4px 0 0 4px;
-        }
-
-        .iti__selected-flag {
-            background-color: transparent;
-            transition: background-color 0.2s;
-        }
-
-        .iti__selected-flag:hover {
-            background-color: rgba(255, 255, 255, 0.05);
-        }
-
-        .iti__country-list {
-            background-color: #1a1a1a;
-            border: 1px solid #333;
-            color: #e0e0e0;
-            font-family: 'Inter', sans-serif;
-            font-size: 14px;
-            z-index: 9999;
-        }
-
-        /* Custom Scrollbar for dropdown */
-        .iti__country-list {
-            scrollbar-width: thin;
-            scrollbar-color: #555 #1a1a1a;
-        }
-
-        .iti__country-list::-webkit-scrollbar {
-            width: 8px;
-        }
-
-        .iti__country-list::-webkit-scrollbar-track {
-            background: #1a1a1a;
-        }
-
-        .iti__country-list::-webkit-scrollbar-thumb {
-            background: #555;
-            border-radius: 4px;
-        }
-
-        .iti__country {
-            border-bottom: 1px solid #252525;
-        }
-
-        .iti__country:last-child {
-            border-bottom: none;
-        }
-
-        .iti__country:hover,
-        .iti__country.iti__highlight {
-            background-color: #333;
-        }
-
-        .iti__dial-code {
-            color: #aaa;
-        }
-
-        /* Adjust input padding to make room for flag */
-        input.input-minimal[name="phone"] {
-            padding-left: 90px !important;
+        /* Force center alignment for phone input and placeholder */
+        input[type="tel"].input-minimal,
+        input[type="tel"].input-minimal::placeholder {
+            text-align: center;
         }
