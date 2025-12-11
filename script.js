@@ -151,9 +151,6 @@ if (waitlistForm) {
                 throw new Error('Erro de configuração. Por favor, recarregue a página.');
             }
 
-            // reCAPTCHA TEMPORARILY DISABLED FOR DEBUGGING
-            // The domain needs to propagate in Google reCAPTCHA settings
-            /*
             // Execute reCAPTCHA v3 (with safety check)
             let recaptchaToken = null;
 
@@ -180,13 +177,8 @@ if (waitlistForm) {
             if (recaptchaToken) {
                 formData.recaptcha_token = recaptchaToken;
             }
-            */
-
-            console.log('📝 Form data:', formData);
 
             // Insert into Supabase with timeout
-            console.log('🔄 Inserting into Supabase...');
-
             // Create a timeout promise
             const timeoutPromise = new Promise((_, reject) => {
                 setTimeout(() => reject(new Error('Timeout: Conexão lenta. Tente novamente.')), 10000);
@@ -207,7 +199,6 @@ if (waitlistForm) {
             }
 
             const { data, error } = result;
-            console.log('📊 Supabase response:', { data, error });
 
             if (error) {
                 // Handle specific errors
