@@ -1,9 +1,7 @@
-# Supabase credentials
-supabase-config.js
-
-# Environment files
+# Environment files (secrets)
 .env
 .env.local
+.env.production
 
-# API keys
-*-config.js
+# OS files
+.DS_Store
