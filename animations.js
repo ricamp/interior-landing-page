@@ -14,33 +14,59 @@ function raf(time) {
 
 requestAnimationFrame(raf);
 
-// 1. ANIMAÇÃO DE ENTRADA DO LOGO (Robust Fix)
-// Tenta pegar filhos diretos (ex: letras agrupadas)
-let logoElements = document.querySelectorAll(".logo-svg > *");
+// 1. ANIMAÇÃO DE ENTRADA DO LOGO (Sincronizada com Vídeo)
+function initHeroAnimation() {
+    // Tenta pegar filhos diretos (ex: letras agrupadas)
+    let logoElements = document.querySelectorAll(".logo-svg > *");
 
-// Se houver poucos elementos (ex: tudo num único grupo <g>), busca os paths internos
-if (logoElements.length <= 1) {
-    logoElements = document.querySelectorAll(".logo-svg path, .logo-svg polygon, .logo-svg rect");
+    // Se houver poucos elementos (ex: tudo num único grupo <g>), busca os paths internos
+    if (logoElements.length <= 1) {
+        logoElements = document.querySelectorAll(".logo-svg path, .logo-svg polygon, .logo-svg rect");
+    }
+
+    const tlHero = gsap.timeline({
+        defaults: {
+            ease: "power2.out"
+        }
+    });
+
+    // Como o CSS já define opacity: 0 e translateY(20px), usamos .to() para o estado final
+    tlHero.to(logoElements, {
+        opacity: 1,
+        y: 0,
+        duration: 1.5,
+        stagger: 0.1
+
+    }).to(".hero-btn", {
+        opacity: 1,
+        y: -50,
+        duration: 0.6
+    }, "-=1.2");
 }
 
-const tlHero = gsap.timeline({
-    defaults: {
-        ease: "power2.out"
+// Sincronizar animação com vídeo hero
+const heroVideo = document.getElementById('hero-video');
+
+if (heroVideo) {
+    // Se o vídeo já está pronto, animar imediatamente
+    if (heroVideo.readyState >= 3) {
+        initHeroAnimation();
+    } else {
+        // Esperar vídeo estar pronto para reproduzir
+        heroVideo.addEventListener('canplay', initHeroAnimation, { once: true });
+
+        // Fallback: se demorar mais de 3 segundos, animar mesmo assim
+        setTimeout(() => {
+            if (heroVideo.readyState < 3) {
+                console.log('⏱️ Fallback: animating logo without video');
+                initHeroAnimation();
+            }
+        }, 3000);
     }
-});
-
-// Como o CSS já define opacity: 0 e translateY(20px), usamos .to() para o estado final
-tlHero.to(logoElements, {
-    opacity: 1,
-    y: 0,
-    duration: 1.5,
-    stagger: 0.1
-
-}).to(".hero-btn", {
-    opacity: 1,
-    y: -50,
-    duration: 0.6
-}, "-=1.2");
+} else {
+    // Se não há vídeo, animar imediatamente
+    initHeroAnimation();
+}
 
 // 2. GRID PARALLAX
 const galleryTl = gsap.timeline({
