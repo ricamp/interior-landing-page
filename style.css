@@ -1416,12 +1416,15 @@
         .site-footer {
             position: absolute;
             bottom: 20px;
-            left: 0;
-            width: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: auto;
             text-align: center;
             z-index: 20;
             /* Above overlay */
             pointer-events: none;
+            white-space: nowrap;
+            /* Prevent wrapping */
         }
 
         .site-footer p {
