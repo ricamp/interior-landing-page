@@ -151,6 +151,9 @@ if (waitlistForm) {
                 throw new Error('Erro de configuração. Por favor, recarregue a página.');
             }
 
+            // reCAPTCHA TEMPORARILY DISABLED FOR DEBUGGING
+            // The domain needs to propagate in Google reCAPTCHA settings
+            /*
             // Execute reCAPTCHA v3 (with safety check)
             let recaptchaToken = null;
 
@@ -177,6 +180,7 @@ if (waitlistForm) {
             if (recaptchaToken) {
                 formData.recaptcha_token = recaptchaToken;
             }
+            */
 
             console.log('📝 Form data:', formData);
 
