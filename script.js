@@ -175,7 +175,9 @@ if (waitlistForm) {
 
             // Add reCAPTCHA token to form data (if available)
             if (recaptchaToken) {
-                formData.recaptcha_token = recaptchaToken;
+                // We don't store the token in the DB, it's just for verification if we had an Edge Function
+                // formData.recaptcha_token = recaptchaToken; 
+                console.log('🛡️ reCAPTCHA verified client-side');
             }
 
             // Insert into Supabase with timeout
@@ -290,7 +292,7 @@ document.addEventListener('DOMContentLoaded', () => {
         window.addEventListener('scroll', () => {
             const scrollPercent = (window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100;
 
-            if (scrollPercent > 50) {
+            if (scrollPercent > 20) {
                 backToTopBtn.classList.add('visible');
             } else {
                 backToTopBtn.classList.remove('visible');
