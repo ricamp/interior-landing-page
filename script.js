@@ -444,6 +444,17 @@ if (waitlistForm) {
             formContent.querySelector('.final-title').style.display = 'none';
             formContent.appendChild(successMessage);
 
+            // Prevent ScrollTrigger from scrolling to top
+            if (typeof ScrollTrigger !== 'undefined') {
+                ScrollTrigger.refresh();
+            }
+
+            // Ensure we stay at the current scroll position
+            const finalSection = document.querySelector('.final-panorama-section');
+            if (finalSection) {
+                finalSection.scrollIntoView({ behavior: 'instant', block: 'center' });
+            }
+
             // Reset after 5s (in case user wants to register another)
             setTimeout(() => {
                 successMessage.remove();
@@ -452,6 +463,11 @@ if (waitlistForm) {
                 waitlistForm.reset();
                 submitBtn.textContent = originalText;
                 submitBtn.disabled = false;
+
+                // Refresh ScrollTrigger after restoring form
+                if (typeof ScrollTrigger !== 'undefined') {
+                    ScrollTrigger.refresh();
+                }
             }, 5000);
 
         } catch (error) {
