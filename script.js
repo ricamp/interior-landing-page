@@ -216,46 +216,57 @@ if (waitlistForm) {
             // Success!
             console.log('✅ Cadastro realizado:', data);
 
-            // Show success message inline
+            // ANIMATION SEQUENCE
             const formContent = document.querySelector('.form-content');
-            const successMessage = document.createElement('div');
-            successMessage.className = 'success-message';
-            successMessage.innerHTML = `
-                <div class="success-icon">✓</div>
-                <h3>Cadastro Realizado!</h3>
-                <p>Você está na lista. Aguarde novidades em breve.</p>
-            `;
+            const originalTitle = formContent.querySelector('.final-title'); // The "TEM INTERESSE?" title
+            const form = formContent.querySelector('form');
+            const disclosure = formContent.querySelector('.recaptcha-disclosure');
+            const successContainer = formContent.querySelector('.success-container');
+            const successTitle = successContainer.querySelector('.final-title');
 
-            // Hide form and show success message
-            waitlistForm.style.display = 'none';
-            formContent.querySelector('.final-title').style.display = 'none';
-            formContent.appendChild(successMessage);
+            if (typeof gsap !== 'undefined') {
+                const tl = gsap.timeline();
 
-            // Prevent ScrollTrigger from scrolling to top
-            if (typeof ScrollTrigger !== 'undefined') {
-                ScrollTrigger.refresh();
+                // 1. Exit Animation (Reverse of Entry)
+                tl.to([originalTitle, form, disclosure], {
+                    opacity: 0,
+                    scale: 0.95,
+                    y: 30, // Move down
+                    duration: 1,
+                    ease: "power2.inOut",
+                    stagger: 0.1,
+                    onComplete: () => {
+                        // Hide old elements
+                        originalTitle.style.display = 'none';
+                        form.style.display = 'none';
+                        if (disclosure) disclosure.style.display = 'none';
+
+                        // Show new container
+                        successContainer.style.display = 'block';
+                    }
+                })
+                    // 2. Entry Animation (Same as original entry style)
+                    .fromTo(successTitle,
+                        { opacity: 0, scale: 0.95, y: 30 }, // Starting state
+                        { opacity: 1, scale: 1, y: 0, duration: 1, ease: "power2.out" } // End state
+                    );
+            } else {
+                // Fallback
+                originalTitle.style.display = 'none';
+                form.style.display = 'none';
+                successContainer.style.display = 'block';
             }
 
             // Ensure we stay at the current scroll position
             const finalSection = document.querySelector('.final-panorama-section');
             if (finalSection) {
-                finalSection.scrollIntoView({ behavior: 'instant', block: 'center' });
+                finalSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
             }
 
-            // Reset after 5s (in case user wants to register another)
-            setTimeout(() => {
-                successMessage.remove();
-                waitlistForm.style.display = 'flex';
-                formContent.querySelector('.final-title').style.display = 'block';
-                waitlistForm.reset();
-                submitBtn.textContent = originalText;
-                submitBtn.disabled = false;
-
-                // Refresh ScrollTrigger after restoring form
-                if (typeof ScrollTrigger !== 'undefined') {
-                    ScrollTrigger.refresh();
-                }
-            }, 5000);
+            // Prevent ScrollTrigger from scrolling to top
+            if (typeof ScrollTrigger !== 'undefined') {
+                ScrollTrigger.refresh();
+            }
 
         } catch (error) {
             console.error('❌ Erro ao cadastrar:', error);
