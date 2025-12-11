@@ -62,22 +62,7 @@ function validatePhone(phone) {
 }
 
 /* --- INTERNATIONAL PHONE INPUT --- */
-let iti = null;
-const phoneInputField = document.querySelector('input[name="phone"]');
-if (phoneInputField) {
-    iti = window.intlTelInput(phoneInputField, {
-        initialCountry: "auto",
-        geoIpLookup: function (callback) {
-            fetch("https://ipapi.co/json")
-                .then(function (res) { return res.json(); })
-                .then(function (data) { callback(data.country_code); })
-                .catch(function () { callback("br"); });
-        },
-        separateDialCode: true,
-        utilsScript: "https://cdn.jsdelivr.net/npm/intl-tel-input@18.2.1/build/js/utils.js",
-        preferredCountries: ['br', 'us', 'pt']
-    });
-}
+
 
 /* --- FORM SUBMISSION HANDLER WITH SUPABASE --- */
 const waitlistForm = document.querySelector('.form-group');
@@ -131,22 +116,13 @@ if (waitlistForm) {
         const nameInput = waitlistForm.querySelector('input[name="name"]').value;
         const emailInput = waitlistForm.querySelector('input[name="email"]').value;
 
-        // Get full international number from plugin
-        const phoneInput = iti ? iti.getNumber() : waitlistForm.querySelector('input[name="phone"]').value;
+        const phoneInput = waitlistForm.querySelector('input[name="phone"]').value;
 
         // Validate inputs
         const validatedName = validateName(nameInput);
         const validatedEmail = validateEmail(emailInput);
 
-        // Use plugin validation or fallback regex
-        let validatedPhone = null;
-        if (iti) {
-            if (iti.isValidNumber()) {
-                validatedPhone = phoneInput; // Use the formatted international number
-            }
-        } else {
-            validatedPhone = validatePhone(phoneInput);
-        }
+        const validatedPhone = validatePhone(phoneInput);
 
         if (!validatedName) {
             alert('Por favor, insira um nome válido (apenas letras, 2-100 caracteres).');
