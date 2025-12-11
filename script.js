@@ -189,8 +189,8 @@ if (waitlistForm) {
             // Race between insert and timeout
             const insertPromise = supabase
                 .from('waitlist')
-                .insert([formData])
-                .select();
+                .insert([formData]);
+            // .select(); // Removed to avoid RLS Select Policy violation (Anon cannot read)
 
             let result;
             try {
