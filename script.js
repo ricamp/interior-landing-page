@@ -251,9 +251,11 @@ if (waitlistForm) {
                         { opacity: 1, scale: 1, y: 0, duration: 1, ease: "power2.out" } // End state
                     );
             } else {
-                // Fallback
+                // Fallback: Immediate switch no animation
+                console.warn('⚠️ GSAP not found, switching immediately');
                 originalTitle.style.display = 'none';
                 form.style.display = 'none';
+                if (disclosure) disclosure.style.display = 'none';
                 successContainer.style.display = 'block';
             }
 
