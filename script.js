@@ -180,13 +180,29 @@ if (waitlistForm) {
 
             console.log('📝 Form data:', formData);
 
-            // Insert into Supabase
+            // Insert into Supabase with timeout
             console.log('🔄 Inserting into Supabase...');
-            const { data, error } = await supabase
+
+            // Create a timeout promise
+            const timeoutPromise = new Promise((_, reject) => {
+                setTimeout(() => reject(new Error('Timeout: Conexão lenta. Tente novamente.')), 10000);
+            });
+
+            // Race between insert and timeout
+            const insertPromise = supabase
                 .from('waitlist')
                 .insert([formData])
                 .select();
 
+            let result;
+            try {
+                result = await Promise.race([insertPromise, timeoutPromise]);
+            } catch (networkError) {
+                console.error('🌐 Network error:', networkError);
+                throw new Error('Erro de conexão. Verifique sua internet e tente novamente.');
+            }
+
+            const { data, error } = result;
             console.log('📊 Supabase response:', { data, error });
 
             if (error) {
