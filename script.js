@@ -178,11 +178,16 @@ if (waitlistForm) {
                 formData.recaptcha_token = recaptchaToken;
             }
 
+            console.log('📝 Form data:', formData);
+
             // Insert into Supabase
+            console.log('🔄 Inserting into Supabase...');
             const { data, error } = await supabase
                 .from('waitlist')
                 .insert([formData])
                 .select();
+
+            console.log('📊 Supabase response:', { data, error });
 
             if (error) {
                 // Handle specific errors
